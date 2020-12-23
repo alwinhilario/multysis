@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Validator;
 
 class OrdersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -38,12 +43,11 @@ class OrdersController extends Controller
     public function store(Request $request)
     {
         // Find Product Object
-        $product = Product::find($id = $request['id']);
+        $product = Product::findOrFail($id = $request['id']);
 
         // Validate Form
         $data = Validator::make($request->all(), [
             'available_stock' => ['required', 'numeric', "min:1", "max:$product->available_stock"]
-            // 'available_stock' => ['required', 'numeric', "min:0", "max:products.available_stock"]
         ], [
             'available_stock.max' => 'Failed to order this product due to unavailability of the stock.'
         ]);

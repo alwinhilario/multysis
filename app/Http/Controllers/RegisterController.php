@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\RegisterEmailJob;
 use App\Mail\RegistrationMailController;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -58,8 +59,8 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password'])
         ]));
 
-        // Send Email To $user
-        Mail::to($data['email'])->send(new RegistrationMailController($user->id));
+        // Send Dispatch Email To $user
+        dispatch(new RegisterEmailJob($user));
 
         return redirect(route('login.index'))->with(['mySuccess' => [
             "User successfully registered."

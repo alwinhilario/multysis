@@ -100,6 +100,8 @@ class LoginController extends Controller
             return redirect(route('home.index'));
         }
 
-        return back()->with(['myErrors' => ['Invalid credentials']]);
+        return back()->with([
+            'myErrors' => ['Invalid credentials']
+        ]);
     }
 }

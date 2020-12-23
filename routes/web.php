@@ -21,16 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes(['verify' => true]);
-
-// Email
-Route::get('/emailtest', function () {
-    $data = 1;
-
-    return new RegistrationMailController($data);
+    return redirect(route('login.index'));
 });
 
 // Home
